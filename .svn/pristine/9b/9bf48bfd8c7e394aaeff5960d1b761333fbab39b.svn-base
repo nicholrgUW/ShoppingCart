@@ -1,0 +1,41 @@
+// Finish and comment me!
+
+package model;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ShoppingCart {
+    private Map myItemQuantities;
+    private boolean myMembership;
+    
+    public ShoppingCart() {
+        myItemQuantities = new HashMap<Item, Integer>();
+        myMembership = false; //do i need to initialize this?
+    }
+
+
+    public void add(final ItemOrder theOrder) {
+        //does a toString on theOrder and parses the string?
+    }
+
+
+    public void setMembership(final boolean theMembership) {
+        myMembership = theMembership;
+    }
+
+
+    public BigDecimal calculateTotal() {
+
+        return null;
+    }
+
+
+    @Override
+    public String toString() {
+        
+        return null;
+    }
+
+}

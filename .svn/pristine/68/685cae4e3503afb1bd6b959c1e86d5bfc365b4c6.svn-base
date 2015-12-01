@@ -1,0 +1,90 @@
+/**
+ * 
+ */
+package tests;
+
+import static org.junit.Assert.*;
+
+import java.math.BigDecimal;
+
+import model.Item;
+import model.ItemOrder;
+import model.ShoppingCart;
+
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * @author Robbie Nichols
+ * @version Autumn 2014
+ */
+public class ShoppingCartTest {
+
+    private static Item TEST_ITEM1 = new Item("TestName", new BigDecimal("19.99"));
+    private static Item TEST_ITEM2 = new Item("FooBar", new BigDecimal("200.00"));
+    private static ItemOrder TEST_ORDER1 = new ItemOrder(TEST_ITEM1, 7);
+    private static ItemOrder TEST_ORDER2 = new ItemOrder(TEST_ITEM2, 1);
+    
+    private ShoppingCart testCart;
+    
+    /**
+     * @throws java.lang.Exception
+     */
+    @Before
+    public void setUp() {
+        testCart = new ShoppingCart();
+    }
+
+    /**
+     * Test method for {@link model.ShoppingCart#ShoppingCart()}.
+     */
+    @Test
+    public void testShoppingCart() {
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test method for {@link model.ShoppingCart#add(model.ItemOrder)}.
+     */
+    @Test
+    public void testAdd() {
+        testCart.add(TEST_ORDER1);
+        assertEquals(testCart.toString(), TEST_ORDER1.toString() + "\n");
+        testCart.add(TEST_ORDER2);
+        assertEquals(testCart.toString(),
+                     TEST_ORDER2.toString() + "\n" + TEST_ORDER1.toString() + "\n");
+        System.out.println(testCart.toString());
+        // fail("Not yet implemented");
+    }
+
+    /**
+     * Test method for {@link model.ShoppingCart#setMembership(boolean)}.
+     */
+    @Test
+    public void testSetMembership() {
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test method for {@link model.ShoppingCart#calculateTotal()}.
+     */
+    @Test
+    public void testCalculateTotal() {
+        testCart.add(TEST_ORDER1);
+        System.out.println(testCart.calculateTotal().toString());
+        System.out.println(TEST_ORDER1.calculateOrderTotal().toString());
+        assertEquals(testCart.calculateTotal().toString(), 
+                     TEST_ORDER1.calculateOrderTotal().toString());
+        //fail("Not yet implemented");
+    }
+
+    /**
+     * Test method for {@link model.ShoppingCart#toString()}.
+     */
+    @Test
+    public void testToString() {
+
+        fail("Not yet implemented");
+    }
+
+}

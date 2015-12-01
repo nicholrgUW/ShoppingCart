@@ -1,0 +1,133 @@
+// Finish and comment me!
+
+package model;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+/**
+ * 
+ * @author Robbie Nichols
+ * @version Autumn 2014
+ */
+public class ShoppingCart {
+    /**
+     * 
+     */
+//    private final Set<ItemOrder> myItemQuantities; // map still might be better with hashes 
+//                                                   // as the key and Item
+    private final List<ItemOrder> myItemQuantities;
+    /**
+     * 
+     */
+    private boolean myMembership;
+    
+    /**
+     * 
+     */
+    public ShoppingCart() {
+        myItemQuantities = new ArrayList<ItemOrder>();
+        myMembership = false; //do i need to initialize this?
+    }
+
+    /**
+     * 
+     * @param theOrder ItemOrder type to store in myItemQuantites.
+     */
+    public void add(final ItemOrder theOrder) { // breaks if nothing is in the
+        boolean flag = false;
+        if (myItemQuantities.isEmpty()) {
+            this.myItemQuantities.add(theOrder);
+        } else {
+            
+            for (int i = 0; i < myItemQuantities.size(); i++) {
+                if (myItemQuantities.get(i).getItem().equals(theOrder.getItem())) {
+                    myItemQuantities.set(i, theOrder);
+                    flag = true;
+//                } else {
+//                    this.myItemQuantities.add(theOrder);
+                }
+            }
+            if(!flag) {
+                this.myItemQuantities.add(theOrder);
+            }
+        }
+/*
+      for (final Iterator<ItemOrder> itr = myItemQuantities.iterator(); itr.hasNext();) {
+        ItemOrder temp = itr.next();
+        if(temp.getItem().equals(theOrder.getItem())){
+            this.myItemQuantities.remove(temp);
+            temp = new ItemOrder(temp.getItem(), 0);
+            this.myItemQuantities.add(new ItemOrder(temp.getItem(), 0));
+        }
+        if(this.myItemQuantities.contains(theOrder)) {
+            this.myItemQuantities.remove(theOrder);
+       }
+        for (final Iterator<ItemOrder> itr = myItemQuantities.iterator(); itr.hasNext();) {
+            final ItemOrder temp = itr.next();
+            if (temp.getItem().equals(theOrder.getItem())) {
+                this.myItemQuantities.add(new ItemOrder(temp.getItem(), 0));
+                //tempRemoval = temp;
+                //ItemOrder temp2 = new ItemOrder(theOrder.getItem(), 0);
+                this.myItemQuantities.add(theOrder);
+            } else {
+                this.myItemQuantities.add(theOrder);
+            }
+        }
+        if(this.myItemQuantities.isEmpty()){
+        this.myItemQuantities.add(theOrder);
+        }
+*/        
+        // needs to remove Orders
+        // does it need to check for existing ItemOrders of similar items?
+    }
+
+    /**
+     * 
+     * @param theMembership Parameter specifying membership.
+     */
+    public void setMembership(final boolean theMembership) {
+        this.myMembership = theMembership;
+    }
+
+    /**
+     * 
+     * @return Total price of all items in a ShoppingCart.
+     */
+    public BigDecimal calculateTotal() {
+        BigDecimal returnTotal = new BigDecimal("0");
+        
+        
+        for(int i = 0; i < this.myItemQuantities.size(); i++){
+            returnTotal = returnTotal.add(this.myItemQuantities.get(i).calculateOrderTotal());
+        }
+////        for (Iterator<ItemOrder> itr = myItemQuantities.iterator(); itr.hasNext(); ) {
+////            returnTotal = returnTotal.add(itr.next().calculateOrderTotal());
+////        }
+//        for (int i = 0; i < myItemQuantities.size(); i++) {
+//            if(!myItemQuantities.get(i).equals(null)){
+//            final BigDecimal temp = this.myItemQuantities.get(i).calculateOrderTotal();
+//            returnTotal = returnTotal.add(temp);
+//        }
+//        }
+        if (myMembership == true) {
+            returnTotal = returnTotal.multiply(new BigDecimal(".9"));
+            //returnTotal = returnTotal.round();
+        }
+        
+        return returnTotal; //need to add membership
+    }
+
+    @Override
+    public String toString() {
+        String returnStr = "";
+        for (final Iterator<ItemOrder> itr = myItemQuantities.iterator(); itr.hasNext();) {//broken
+            returnStr = returnStr + itr.next().toString() + "\n";
+        }
+        return returnStr;
+    }
+
+}

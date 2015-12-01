@@ -1,0 +1,71 @@
+/**
+ * 
+ */
+package tests;
+
+import static org.junit.Assert.*;
+
+import java.math.BigDecimal;
+import model.Item;
+import model.ItemOrder;
+
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * @author Robbie Nichols
+ * @version Autumn 2014
+ */
+public class ItemOrderTest {
+    private static Item TEST_ITEM = new Item("TestName", new BigDecimal("19.99"));
+    private static Item TEST_BULK = new Item("BulkName", new BigDecimal("19.99"), 6, 
+                                             new BigDecimal("107.94"));
+    
+    private ItemOrder myOrder1;
+    private ItemOrder myOrder2;
+    private Item myItem;
+    private int myQuantity;
+    /**
+     * @throws java.lang.Exception
+     */
+    @Before
+    public void setUp() {
+    myOrder1 = new ItemOrder(TEST_ITEM, 5);
+    myOrder2 = new ItemOrder(TEST_BULK, 7);
+    }
+
+    //no constructor test, handled by setUp
+
+    /**
+     * Test method for {@link model.ItemOrder#calculateOrderTotal()}.
+     */
+    @Test
+    public void testCalculateOrderTotal() {
+        //19.99 * 5 = 99.95
+        assertEquals(myOrder1.calculateOrderTotal(), new BigDecimal("99.95"));
+        //17.99 * 6 + 19.99 * 1 = 127.93
+        assertEquals(myOrder2.calculateOrderTotal(), new BigDecimal("127.93"));
+        assertNotEquals(myOrder1.calculateOrderTotal(), myOrder2.calculateOrderTotal());
+        //fail("Not yet implemented");
+    }
+
+    /**
+     * Test method for {@link model.ItemOrder#getItem()}.
+     */
+    @Test
+    public void testGetItem() {
+        assertEquals(myOrder1.getItem(), TEST_ITEM);
+        assertNotEquals(myOrder1.getItem(), myOrder2.getItem());
+        //fail("Not yet implemented");
+    }
+
+    /**
+     * Test method for {@link model.ItemOrder#toString()}.
+     */
+    @Test
+    public void testToString() {
+        assertEquals(myOrder2.toString(), "BulkName, $19.99 (6 for $107.94), Quantity: 7");
+        //fail("Not yet implemented");
+    }
+
+}

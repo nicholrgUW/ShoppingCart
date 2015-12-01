@@ -1,0 +1,55 @@
+// Finish and comment me!
+
+package model;
+
+import java.math.BigDecimal;
+    /**
+     * 
+     * @author Robbie Nichols eibbor08@uw.edu
+     * @version Autumn 2014
+     */
+public final class ItemOrder {
+    
+    /** Type of Item held within a specific ItemOrder. */
+    private final Item myItem;
+    
+    /** The quantity of the Item. */
+    private final int myQuantity;
+    
+    /**
+     * @param theItem The Item type held within a specific ItemOrder passed to the constructor.
+     * @param theQuantity   Quantity of the Item passed to the constructor.
+     */
+    public ItemOrder(final Item theItem, final int theQuantity) {
+//        if(theQuantity >= 0){
+//            myQuantity = theQuantity;
+//        } else {
+//            myQuantity = 0;
+//        }
+        myQuantity = theQuantity;
+        myItem = theItem;
+       
+    }
+
+    /**
+     * @return Returns total price of the order as a BigDecimal.
+     */
+    public BigDecimal calculateOrderTotal() {
+        return myItem.calculateItemTotal(myQuantity);
+    }
+
+    /**
+     * @return Returns a reference to myItem.
+     */
+    public Item getItem() {
+        //really this simple?
+        return myItem;
+    }
+
+
+    @Override
+    public String toString() {
+        return this.getItem().toString() + ", Quantity: " + this.myQuantity;
+    }
+
+}

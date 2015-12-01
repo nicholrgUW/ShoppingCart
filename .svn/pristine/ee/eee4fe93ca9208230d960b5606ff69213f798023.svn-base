@@ -1,0 +1,83 @@
+/**
+ * 
+ */
+package tests;
+
+import static org.junit.Assert.*;
+import model.Item;
+import java.math.BigDecimal;
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * @author Robbie Nichols
+ * @version Autumn 2014
+ */
+public class ItemTest {
+
+    /** A test Item. */
+    private Item myItem; //do i need to put in fields of the object I'm testing, prb not?
+    /** A test bulk Item.*/
+    private Item myBulkItem;//are these the right naming conventions?
+    /** Price for setUp. */
+    private final BigDecimal myPrice = new BigDecimal("19.99");
+    /** Bulk price for setUp. */
+    private final BigDecimal myBulkPrice = new BigDecimal("100.00");
+    private final int myBulkQuantity = 6;
+    
+    /**
+     * 
+     */
+    @Before
+    public void setUp() {     
+        myItem = new Item("TestName", myPrice);
+        myBulkItem = new Item("TestNameBulk", myPrice, myBulkQuantity, myBulkPrice);
+    }
+
+    /**
+     * Test method for {@link model.Item#hashCode()}.
+     */
+    @Test
+    public void testHashCode() {
+        assertEquals(myItem.hashCode(), new Item("TestName", myPrice).hashCode());
+        assertEquals(myBulkItem.hashCode(), myBulkItem.hashCode());
+        assertNotEquals(myItem.hashCode(), myBulkItem.hashCode());
+    }
+
+    /**
+     * Test method for {@link model.Item#calculateItemTotal(int)}.
+     */
+    @Test
+    public void testCalculateItemTotal() {
+        //127.93 = real total for 6*17.99+1*19.99
+//        System.out.println( new BigDecimal(myBulkItem.calculateItemTotal(7).toString()));
+//        System.out.println( new BigDecimal(myItem.calculateItemTotal(5).toString()));
+        assertEquals(myBulkItem.calculateItemTotal(7).toString(), "119.99");
+        assertEquals(myItem.calculateItemTotal(5).toString(), "99.95");
+    }
+
+    /**
+     * Test method for {@link model.Item#toString()}.
+     */
+    @Test
+    public void testToString() {
+        assertEquals(myItem.toString(), "TestName, $19.99");
+        assertEquals(myBulkItem.toString(), "TestNameBulk, $19.99 (6 for $100.00)");
+    }
+
+    /**
+     * Test method for {@link model.Item#equals(java.lang.Object)}.
+     */
+    @Test
+    public void testEqualsObject() { // redundant with toString?
+        // test partially null item?
+        final Item aBulkItem = new Item("TestNameBulk", myPrice, myBulkQuantity, myBulkPrice);
+        assertEquals(myItem, myItem);
+        assertEquals(myBulkItem, aBulkItem);
+        assertNotEquals(myItem, myBulkItem);
+        assertFalse(myItem.equals(null));
+        String foo = "bar";
+        assertFalse(myItem.equals(foo));
+    }
+
+}

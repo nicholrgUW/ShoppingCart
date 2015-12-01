@@ -1,0 +1,84 @@
+/**
+ * 
+ */
+package tests;
+
+import static org.junit.Assert.*;
+
+import java.math.BigDecimal;
+
+import model.Item;
+import model.ItemOrder;
+import model.ShoppingCart;
+
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * @author Robbie Nichols
+ * @version Autumn 2014
+ */
+public class ShoppingCartTest {
+
+    private static Item TEST_ITEM = new Item("TestName", new BigDecimal("19.99"));
+    
+    private static ItemOrder TEST_ORDER1 = new ItemOrder(TEST_ITEM, 7);
+    private static ItemOrder TEST_ORDER2 = new ItemOrder(TEST_ITEM, 1);
+    
+    
+    private ShoppingCart testCart;
+    
+    /**
+     * @throws java.lang.Exception
+     */
+    @Before
+    public void setUp() {
+        testCart = new ShoppingCart();
+    }
+
+//no constructor test -- handled by setUp
+
+    /**
+     * Test method for {@link model.ShoppingCart#add(model.ItemOrder)}.
+     */
+    @Test
+    public void testAdd() {
+        testCart.add(TEST_ORDER1);
+        assertEquals(testCart.toString(), TEST_ORDER1.toString() + "\n");
+        testCart.add(TEST_ORDER2);
+        assertEquals(testCart.toString(), TEST_ORDER2.toString() + "\n");
+        // fail("Not yet implemented");
+    }
+
+    /**
+     * Test method for {@link model.ShoppingCart#setMembership(boolean)}.
+     */
+    @Test
+    public void testSetMembership() {
+        testCart.add(TEST_ORDER2);
+        assertEquals(testCart.calculateTotal(), new BigDecimal("19.99"));
+        testCart.setMembership(true);
+        System.out.println(testCart.calculateTotal().toString());
+        assertEquals(testCart.calculateTotal(), new BigDecimal("17.99"));
+    }
+
+    /**
+     * Test method for {@link model.ShoppingCart#calculateTotal()}.
+     */
+    @Test
+    public void testCalculateTotal() {
+        testCart.add(TEST_ORDER1);
+        assertEquals(testCart.calculateTotal().toString(), 
+                     TEST_ORDER1.calculateOrderTotal().toString());
+        //fail("Not yet implemented");
+    }
+
+    /**
+     * Test method for {@link model.ShoppingCart#toString()}.
+     */
+    @Test
+    public void testToString() {
+//covered in testAdd
+  
+    }
+}

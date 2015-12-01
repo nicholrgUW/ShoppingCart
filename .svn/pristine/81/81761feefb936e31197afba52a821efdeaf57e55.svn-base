@@ -1,0 +1,99 @@
+// Finish and comment me!
+
+package model;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+/**
+ * 
+ * @author Robbie Nichols
+ * @version Autumn 2014
+ */
+public class ShoppingCart {
+    
+    /** Collection containing ItemOrders with Item as the key and ItemOrder as the value. */
+    private final Map<Item, ItemOrder> myItemQuantities;
+//    private final List<ItemOrder> myItemQuantities;
+    
+    /** Boolean flag specifying membership (for discounting in calculateTotal). */
+    private boolean myMembership;
+    
+    /**
+     * 
+     */
+    public ShoppingCart() {
+//        myItemQuantities = new ArrayList<ItemOrder>();
+        myItemQuantities = new HashMap<Item, ItemOrder>();
+        myMembership = false; //do i need to initialize this?
+    }
+
+    /**
+     * 
+     * @param theOrder ItemOrder type to store in myItemQuantites.
+     */
+    public void add(final ItemOrder theOrder) { // breaks if nothing is in the
+//        boolean flag = false;             //works with ArrayList
+//        if (myItemQuantities.isEmpty()) {
+//            this.myItemQuantities.add(theOrder);
+//        } else {
+//            
+//            for (int i = 0; i < myItemQuantities.size(); i++) {
+//                if (myItemQuantities.get(i).getItem().equals(theOrder.getItem())) {
+//                    myItemQuantities.set(i, theOrder);
+//                    flag = true;
+//                }
+//            }
+//            if(!flag) {
+//                this.myItemQuantities.add(theOrder);
+//            }
+//        }
+        if (this.myItemQuantities.isEmpty()) {
+            this.myItemQuantities.put(theOrder.getItem(), theOrder);
+        } else { //if(this.myItemQuantities.containsKey(theOrder.getItem())){
+            this.myItemQuantities.put(theOrder.getItem(), theOrder);            
+        }
+    }
+
+
+    /**
+     * 
+     * @param theMembership Parameter specifying membership.
+     */
+    public void setMembership(final boolean theMembership) {
+        this.myMembership = theMembership;
+    }
+
+    /**
+     * 
+     * @return Total price of all items in a ShoppingCart.
+     */
+    public BigDecimal calculateTotal() {
+        BigDecimal returnTotal = BigDecimal.ZERO;
+        for (final Item key : myItemQuantities.keySet()) {
+            returnTotal = returnTotal.add(myItemQuantities.get(key).calculateOrderTotal());
+        }
+
+        // for(int i = 0; i < this.myItemQuantities.size(); i++){
+        // returnTotal =
+        // returnTotal.add(this.myItemQuantities.get(i).calculateOrderTotal());
+        // }
+        
+        if (myMembership) {
+            returnTotal = returnTotal.multiply(new BigDecimal(".9"));
+            returnTotal = returnTotal.setScale(2, returnTotal.ROUND_HALF_EVEN);
+            // returnTotal = returnTotal.round();
+        }
+        return returnTotal;
+    }
+
+    @Override
+    public String toString() {
+        String returnStr = "";
+        for (final Item key : myItemQuantities.keySet()) {
+            returnStr = returnStr + myItemQuantities.get(key).toString() + "\n";
+        }
+        return returnStr;
+    }
+
+}
